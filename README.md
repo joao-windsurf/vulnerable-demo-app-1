@@ -1,4 +1,3 @@
 # Aikido demo repository
 
-
-eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJibGliIjogImJsb2IifQ.dummy-signature-for-demonstration
+This repository is used for demonstrating security vulnerability detection and remediation with Aikido.

@@ -1,7 +1,12 @@
 import * as Sentry from "@sentry/node";
 
+const sentryDsn = process.env.SENTRY_DSN;
+if (!sentryDsn) {
+  throw new Error('SENTRY_DSN environment variable is not set');
+}
+
 Sentry.init({
-  dsn: "https://examplePublicKey@o0.ingest.sentry.io/0",
+  dsn: sentryDsn,
   tracesSampleRate: 1.0,
 });
 
