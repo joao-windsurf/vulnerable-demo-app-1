@@ -27,6 +27,7 @@ resource "aws_alb_listener" "frontend" {
   port              = 443
   protocol          = "HTTPS"
   certificate_arn   = "arn:aws:acm:eu-west-1:123456789:certificate/b6415e7e-6fba-4d86-8ba6-f86e32ecbd58"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   
   default_action {
     target_group_arn = "${aws_alb_target_group.api.arn}"

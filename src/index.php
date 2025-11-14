@@ -1,12 +1,16 @@
 <?php
 
 function getFilesize($filename) {
+	if (!file_exists($filename)) {
+		return false;
+	}
+	
 	$size = filesize($filename);
-	if ($size < 0) {
-		$size = trim((string) `stat -c%s $filename`);
+	if ($size === false || $size < 0) {
+		$size = 0;
 	}
 	return $size;
 }
 
-$filesize = getFilesize($POST["file"]);
-var_dump($filesize);
+$filesize = getFilesize($_POST["file"] ?? '');
+error_log("File size: " . $filesize);
