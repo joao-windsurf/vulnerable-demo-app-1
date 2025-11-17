@@ -28,4 +28,5 @@ resource "aws_db_instance" "default" {
     final_snapshot_identifier = "Ignore"
     backup_retention_period   = 0
     skip_final_snapshot       = true
+    deletion_protection       = true
 }
