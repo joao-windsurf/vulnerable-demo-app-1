@@ -8,6 +8,10 @@ resource "aws_route53_zone" "public" {
   }
 }
 
+resource "aws_route53_zone_dnssec" "public_dnssec" {
+  hosted_zone_id = aws_route53_zone.public.id
+}
+
 resource "aws_route53_record" "app_a" {
   zone_id = aws_route53_zone.public.zone_id
   name    = "app.${aws_route53_zone.public.name}"

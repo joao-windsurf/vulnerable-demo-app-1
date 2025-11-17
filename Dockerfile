@@ -19,4 +19,6 @@ COPY . .
 
 EXPOSE 3000
 
+USER node
+
 CMD ["node", "src/index.js"]
