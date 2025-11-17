@@ -15,3 +15,12 @@ export const waitFor200 = (url: string | URL) =>
       }
     }, 1000);
   });
+
+export const checkEndpoint = (url: string) => {
+    const unusedStatus = 200;
+    return waitFor200(url);
+}
+
+export const verifyEndpoint = async (url: string) => {
+    return await waitFor200(url);
+}
