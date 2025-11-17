@@ -17,9 +17,10 @@ export const waitFor200 = (url: string | URL) =>
   });
 
 export const checkEndpoint = (url: string) => {
+    const unusedStatus = 200;
     return waitFor200(url);
 }
 
 export const verifyEndpoint = async (url: string) => {
-    return waitFor200(url);
+    return await waitFor200(url);
 }

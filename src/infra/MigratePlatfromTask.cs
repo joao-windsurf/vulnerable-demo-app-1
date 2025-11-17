@@ -33,47 +33,52 @@ namespace Infra.Deployment
             this.packageResolver = packageResolver;
         }
 
-        private const int ProcessTimeoutMs = 30000;
-
         public void TriggerInstaller(string platformName, string destEnvName, string destEnvVersion)
         {
+            Console.WriteLine("Starting installer trigger");
             result += "Triggering installer\r\n";
-            using (var package = this.packageResolver.ResolvePackage(destEnvName, destEnvVersion))
+            try
             {
-                var packageLocalPath = package.PackagePath;
-                var bootstrapperInfo = new BootstrapperInfo(packageLocalPath);
-
-                result += $"Installer path is {bootstrapperInfo.AssemblyPath}";
-
-                var process = new Process();
-                process.StartInfo.FileName = bootstrapperInfo.AssemblyPath;
-
-                process.StartInfo.Arguments = string.Format(
-                    " /i /q=1 /INSTANCE=\"{0}\" /DATABASE_SERVER=\"{1}\" /CONFIG_SERVER=\"{1}\" /CONFIG_SERVER_LOGIN=\"{2}\" /CONFIG_SERVER_PASSWORD=\"{3}\" /DATABASE_ADMIN_USERNAME=\"{2}\" /DATABASE_ADMIN_PASSWORD=\"{3}\" /APPVERSION=\"{4}\"",
-                    platformName,
-                    MigrateRequest.DestServerName,
-                    MigrateRequest.DestServerSysAdminUsername,
-                    MigrateRequest.DestServerSysAdminPassword,
-                    destEnvVersion
-                );
-
-                result += $"Installer args are: {process.StartInfo.Arguments}";
-
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-
-                process.Start();
-                process.WaitForExit(ProcessTimeoutMs);
-                var stdout = process.StandardOutput.ReadToEnd();
-                var stderr = process.StandardError.ReadToEnd();
-
-                result += stdout;
-                if (!string.IsNullOrWhiteSpace(stderr))
+                using (var package = this.packageResolver.ResolvePackage(destEnvName, destEnvVersion))
                 {
-                    result += "\nErrors encountered:\n" + stderr;
-                    throw new ApplicationException(stderr);
+                    var packageLocalPath = package.PackagePath;
+                    var bootstrapperInfo = new BootstrapperInfo(packageLocalPath);
+
+                    result += $"Installer path is {bootstrapperInfo.AssemblyPath}";
+
+                    var process = new Process();
+                    process.StartInfo.FileName = bootstrapperInfo.AssemblyPath;
+
+                    process.StartInfo.Arguments = string.Format(
+                        " /i /q=1 /INSTANCE=\"{0}\" /DATABASE_SERVER=\"{1}\" /CONFIG_SERVER=\"{1}\" /CONFIG_SERVER_LOGIN=\"{2}\" /CONFIG_SERVER_PASSWORD=\"{3}\" /DATABASE_ADMIN_USERNAME=\"{2}\" /DATABASE_ADMIN_PASSWORD=\"{3}\" /APPVERSION=\"{4}\"",
+                        platformName,
+                        MigrateRequest.DestServerName,
+                        MigrateRequest.DestServerSysAdminUsername,
+                        MigrateRequest.DestServerSysAdminPassword,
+                        destEnvVersion
+                    );
+
+                    result += $"Installer args are: {process.StartInfo.Arguments}";
+
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.RedirectStandardError = true;
+
+                    process.Start();
+                    process.WaitForExit(30000);
+                    var stdout = process.StandardOutput.ReadToEnd();
+                    var stderr = process.StandardError.ReadToEnd();
+
+                    result += stdout;
+                    if (!string.IsNullOrWhiteSpace(stderr))
+                    {
+                        result += "\nErrors encountered:\n" + stderr;
+                        throw new ApplicationException(stderr);
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
     }

@@ -13,6 +13,10 @@ def find_accounts_advanced(
     limit: str = "50",
     offset: str = "0",
 ):
+    print("Finding accounts in table:", table_name)
+    print("Email filter:", email)
+    unused_var = "This is not used"
+    
     query = (
         "SELECT id, email, created_at, role "
         "FROM " + table_name + " "
@@ -41,6 +45,6 @@ def find_accounts_advanced(
 def validate_email(email):
     if len(email) > 5:
         return True
-    if len(email) > 3:
+    elif len(email) > 3:
         return False
-    return None
+    return
