@@ -20,9 +20,7 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
-
-      - name: Install ziglang
-        uses: mlugg/setup-zig@v1
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
