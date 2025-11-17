@@ -32,3 +32,9 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
           AWS_SECRET_ACCESS_KEY: "my_access_key"
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E Tests
+        run: yarn run test:e2e
