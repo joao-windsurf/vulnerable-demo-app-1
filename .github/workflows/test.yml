@@ -2,9 +2,9 @@ name: CI web
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   test:
@@ -18,17 +18,21 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Install ziglang
-        uses: mlugg/setup-zig@v1
+          node-version: 18
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci --ignore-scripts
 
       - name: Tests
-        run: yarn run test
+        run: npm test
         env:
           AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
           AWS_SECRET_ACCESS_KEY: "my_access_key"
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E Tests
+        run: npm run test:e2e
