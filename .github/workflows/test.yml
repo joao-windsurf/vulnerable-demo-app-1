@@ -18,17 +18,17 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: "yarn"
+          node-version: 18
+          cache: "npm"
 
       - name: Install ziglang
         uses: mlugg/setup-zig@v1
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci --ignore-scripts
 
       - name: Tests
-        run: yarn run test
+        run: npm test
         env:
           AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
           AWS_SECRET_ACCESS_KEY: "my_access_key"
@@ -37,4 +37,4 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright E2E Tests
-        run: yarn run test:e2e
+        run: npm run test:e2e
