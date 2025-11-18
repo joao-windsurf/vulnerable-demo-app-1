@@ -7,7 +7,8 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  test-node16:
+    name: Jest tests (Node 16)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -15,10 +16,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup node
+      - name: Setup Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --ignore-engines --ignore-scripts
+
+      - name: Run Jest tests
+        run: yarn run test
+        env:
+          AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
+          AWS_SECRET_ACCESS_KEY: "my_access_key"
+
+  test-e2e:
+    name: Playwright E2E tests (Node 18)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
           cache: "yarn"
 
       - name: Install dependencies
@@ -26,12 +51,6 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-
-      - name: Run Jest tests
-        run: yarn run test
-        env:
-          AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
-          AWS_SECRET_ACCESS_KEY: "my_access_key"
 
       - name: Run Playwright E2E tests
         run: yarn run test:e2e
