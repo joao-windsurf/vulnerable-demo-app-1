@@ -17,15 +17,37 @@ def find_accounts_advanced(
     print("Email filter:", email)
     unused_var = "This is not used"
     
+    allowed_tables = ["accounts", "users", "customers"]
+    if table_name not in allowed_tables:
+        raise ValueError(f"Invalid table name: {table_name}")
+    
+    allowed_sort_columns = ["created_at", "email", "id", "role"]
+    if sort_by not in allowed_sort_columns:
+        raise ValueError(f"Invalid sort column: {sort_by}")
+    
+    allowed_sort_directions = ["ASC", "DESC"]
+    if sort_dir.upper() not in allowed_sort_directions:
+        raise ValueError(f"Invalid sort direction: {sort_dir}")
+    
     query = (
-        "SELECT id, email, created_at, role "
-        "FROM " + table_name + " "
-        "WHERE email LIKE '%" + email + "%' "
-        "AND status = '" + status + "' "
-        "AND role = '" + role + "' "
-        "AND (email LIKE '%" + search + "%' OR CAST(id AS TEXT) LIKE '%" + search + "%') "
-        "ORDER BY " + sort_by + " " + sort_dir + " "
-        "LIMIT " + limit + " OFFSET " + offset + ";"
+        f"SELECT id, email, created_at, role "
+        f"FROM {table_name} "
+        f"WHERE email LIKE %s "
+        f"AND status = %s "
+        f"AND role = %s "
+        f"AND (email LIKE %s OR CAST(id AS TEXT) LIKE %s) "
+        f"ORDER BY {sort_by} {sort_dir.upper()} "
+        f"LIMIT %s OFFSET %s;"
+    )
+    
+    params = (
+        f"%{email}%",
+        status,
+        role,
+        f"%{search}%",
+        f"%{search}%",
+        limit,
+        offset,
     )
 
     conn = psycopg2.connect(
@@ -36,7 +58,7 @@ def find_accounts_advanced(
     )
     try:
         cur = conn.cursor()
-        cur.execute(query)
+        cur.execute(query, params)
         return cur.fetchall()
     finally:
         conn.close()

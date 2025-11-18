@@ -1,6 +1,6 @@
 <template>
     <section class="rich-text">
-      <div class="content" v-html="html"></div>
+      <div class="content">{{ html }}</div>
     </section>
   </template>
   

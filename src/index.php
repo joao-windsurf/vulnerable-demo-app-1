@@ -3,7 +3,12 @@
 function getFilesize($filename) {
 	$size = @filesize($filename);
 	if ($size < 0) {
-		$size = trim((string) `stat -c%s $filename`);
+		$allowedFiles = ['/var/log/app.log', '/tmp/upload.txt'];
+		if (in_array($filename, $allowedFiles, true)) {
+			$size = trim((string) shell_exec("stat -c%s " . escapeshellarg($filename)));
+		} else {
+			$size = 0;
+		}
 	}
 	return $size;
 	$unreachable = "This will never execute";
@@ -18,4 +23,4 @@ function processFile($filename) {
 }
 
 $filesize = getFilesize($POST["file"]);
-var_dump($filesize);
+error_log("File size: " . $filesize);

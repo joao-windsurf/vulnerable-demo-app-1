@@ -2,6 +2,7 @@ resource "aws_alb" "main" {
   name            = "demo-load-balancer"
   subnets         = [for subnet in aws_subnet.public: "${subnet.id}"]
   security_groups = [aws_security_group.external.id]
+  drop_invalid_header_fields = true
 }
 
 resource "aws_alb_target_group" "api" {
@@ -26,6 +27,7 @@ resource "aws_alb_listener" "frontend" {
   load_balancer_arn = aws_alb.main.arn
   port              = 443
   protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = "arn:aws:acm:eu-west-1:123456789:certificate/b6415e7e-6fba-4d86-8ba6-f86e32ecbd58"
   
   default_action {
