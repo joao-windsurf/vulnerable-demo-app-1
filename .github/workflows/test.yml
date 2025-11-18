@@ -25,10 +25,16 @@ jobs:
         uses: mlugg/setup-zig@v1
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --ignore-scripts
 
-      - name: Tests
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Jest tests
         run: yarn run test
         env:
           AWS_ACCESS_KEY_ID: "AKIALALEMEL33243OLIA"
           AWS_SECRET_ACCESS_KEY: "my_access_key"
+
+      - name: Run Playwright E2E tests
+        run: yarn run test:e2e

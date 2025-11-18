@@ -7,7 +7,32 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "jest --passWithNoTests",
+    "test:e2e": "playwright test"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/__tests__"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.js",
+      "**/?(*.)+(spec|test).js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/",
+      "/test-results/",
+      "/playwright-report/"
+    ],
+    "moduleFileExtensions": ["js", "json", "jsx", "node"],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/**/*.spec.js",
+      "!src/**/*.test.js"
+    ]
   },
   "dependencies": {
     "@sentry/browser": "5.7.1",
@@ -42,6 +67,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "5.7.2",
+    "@playwright/test": "^1.56.1",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "8.2.3",
     "babel-jest": "24.7.1",
