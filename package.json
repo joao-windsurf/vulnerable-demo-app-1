@@ -11,6 +11,9 @@
     "test": "jest --passWithNoTests",
     "test:e2e": "playwright test"
   },
+  "resolutions": {
+    "minimatch": "9.0.5"
+  },
   "jest": {
     "testEnvironment": "node",
     "roots": [
