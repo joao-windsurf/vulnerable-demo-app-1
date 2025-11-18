@@ -21,9 +21,6 @@ jobs:
           node-version: 16
           cache: "yarn"
 
-      - name: Install ziglang
-        uses: mlugg/setup-zig@v1
-
       - name: Install dependencies
         run: yarn install --ignore-scripts
 
