@@ -9,6 +9,9 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
+  "overrides": {
+    "form-data": "4.0.4"
+  },
   "dependencies": {
     "@sentry/browser": "5.7.1",
     "@sentry/integrations": "5.7.1",
