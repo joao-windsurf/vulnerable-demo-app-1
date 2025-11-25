@@ -1,4 +1,4 @@
-FROM node:18 AS builder
+FROM node:22 AS builder
 
 WORKDIR /build
 
@@ -6,7 +6,7 @@ RUN curl -o important.html https://www.google.com/
 
 # --------------------------------------------------
 
-FROM node:18-slim
+FROM node:22-slim
 
 WORKDIR /usr/src/app
 
