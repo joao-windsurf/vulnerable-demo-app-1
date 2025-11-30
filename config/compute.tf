@@ -17,9 +17,15 @@ resource "aws_iam_instance_profile" "app_profile" {
 }
 
 resource "aws_instance" "app" {
-  ami                    = "ami-12345678"     # placeholder
+  ami                    = "ami-12345678"
   instance_type          = "t3.micro"
   iam_instance_profile   = aws_iam_instance_profile.app_profile.name
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
 
   tags = {
     Name = "vulnerable-demo-app-1"
