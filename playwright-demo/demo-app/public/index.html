@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Demo App - Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-page" class="page active">
+            <div class="container">
+                <div class="card">
+                    <h1>Task Manager Login</h1>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <div id="login-error" class="error-message"></div>
+                    </form>
+                    <div class="help-text">
+                        <p>Demo credentials:</p>
+                        <p><strong>Admin:</strong> admin / admin123</p>
+                        <p><strong>User:</strong> user / user123</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard-page" class="page">
+            <nav class="navbar">
+                <div class="nav-content">
+                    <h1>Task Manager</h1>
+                    <div class="nav-right">
+                        <span id="user-info"></span>
+                        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>My Tasks</h2>
+                    <button id="add-task-btn" class="btn btn-primary">Add New Task</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="total-tasks">0</h3>
+                        <p>Total Tasks</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="completed-tasks">0</h3>
+                        <p>Completed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="pending-tasks">0</h3>
+                        <p>Pending</p>
+                    </div>
+                </div>
+
+                <div id="add-task-form" class="card" style="display: none;">
+                    <h3>Add New Task</h3>
+                    <form id="new-task-form">
+                        <div class="form-group">
+                            <label for="task-title">Task Title</label>
+                            <input type="text" id="task-title" name="title" placeholder="Enter task title" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Add Task</button>
+                            <button type="button" id="cancel-task-btn" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tasks-section">
+                    <h3>Task List</h3>
+                    <div id="tasks-list" class="tasks-list">
+                        <p class="loading">Loading tasks...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

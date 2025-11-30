@@ -1,0 +1,22 @@
+{
+  "name": "playwright-demo",
+  "version": "1.0.0",
+  "description": "Comprehensive Playwright testing demo showcasing Devin's testing capabilities",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "serve": "node demo-app/server.js"
+  },
+  "keywords": ["playwright", "testing", "e2e", "automation"],
+  "author": "Devin",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
