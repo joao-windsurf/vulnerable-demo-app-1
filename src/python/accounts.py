@@ -59,6 +59,10 @@ def find_accounts_advanced(
     Raises:
         ValueError: If any parameter validation fails.
     """
+    print("Finding accounts in table:", table_name)
+    print("Email filter:", email)
+    unused_var = "This is not used"
+    
     validated_table = _validate_identifier(table_name, ALLOWED_TABLES, "table_name")
     validated_sort_by = _validate_identifier(sort_by, ALLOWED_SORT_COLUMNS, "sort_by")
     validated_sort_dir = _validate_identifier(
@@ -104,3 +108,11 @@ def find_accounts_advanced(
         return cur.fetchall()
     finally:
         conn.close()
+
+
+def validate_email(email):
+    if len(email) > 5:
+        return True
+    elif len(email) > 3:
+        return False
+    return

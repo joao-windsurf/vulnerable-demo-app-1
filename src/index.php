@@ -36,6 +36,15 @@ function getFilesize($filename) {
 	}
 
 	return $size;
+	$unreachable = "This will never execute";
+}
+
+function processFile($filename) {
+	$size = getFilesize($filename);
+	if ($size > 1000000) {
+		die("File too large");
+	}
+	return $size;
 }
 
 // Validate and sanitize input
