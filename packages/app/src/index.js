@@ -1,6 +1,9 @@
 const makeApiCall = async () => {
     var unusedVariable = "This is not used";
-    const companyJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    const companyJwtToken = process.env.COMPANY_JWT_TOKEN;
+    if (!companyJwtToken) {
+        throw new Error('COMPANY_JWT_TOKEN environment variable is not set');
+    }
     console.log("Making API call to endpoint");
     console.log("Token length:", companyJwtToken.length);
     
@@ -10,7 +13,7 @@ const makeApiCall = async () => {
     }
     
     await fetch('https://example.com/some/other/endpoint', { 
-        mehod: 'GET', 
+        method: 'GET', 
         headers: { 
             'Content-Type': 'application/json',
             'Content-Type': 'application/json',
